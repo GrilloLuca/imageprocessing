@@ -13,7 +13,7 @@ function App() {
           style={{backgroundColor: 'green'}}></canvas>
           
         <p>
-          Ciao Marica
+          Ciao Marica! 
         </p>
         <a
           className="App-link"
