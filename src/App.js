@@ -6,7 +6,12 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        
+        <canvas id="myCanvas" 
+          width="200" 
+          height="100" 
+          style={{backgroundColor: 'green'}}></canvas>
+          
         <p>
           Ciao Marica
         </p>
