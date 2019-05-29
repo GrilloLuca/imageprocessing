@@ -10,9 +10,17 @@ class Canvas extends React.Component {
         let cx = Math.floor(Math.random() * this.width); 
         let cy = Math.floor(Math.random() * this.height); 
 
+        let r = Math.floor(Math.random() * 9);
+        let g = Math.floor(Math.random() * 9);
+        let b = Math.floor(Math.random() * 9);
+
+        let size = 10 + Math.floor(Math.random() * 90);
+        
+        let color = `#${r}${g}${b}`;
+
         this.context.beginPath();
-        this.context.arc(cx, cy, 50, 0, 2 * Math.PI);
-        this.context.strokeStyle = "#FF0000";
+        this.context.arc(cx, cy, size, 0, 2 * Math.PI);
+        this.context.strokeStyle = color;
         this.context.stroke();
     }
 
