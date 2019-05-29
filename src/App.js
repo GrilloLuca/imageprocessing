@@ -1,31 +1,21 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Canvas from './components/Canvas';
 
-function App() {
+const app = () => {
+
   return (
     <div className="App">
       <header className="App-header">
         
-        <canvas id="myCanvas" 
-          width="200" 
-          height="100" 
-          style={{backgroundColor: 'green'}}></canvas>
+       <Canvas title='Canvas1'/>
           
-        <p>
-          Ciao Marica! 
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <p> Ciao Marica! </p>
+        
       </header>
     </div>
   );
 }
 
-export default App;
+export default app;
