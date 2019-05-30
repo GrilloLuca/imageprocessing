@@ -2,9 +2,9 @@ import React from 'react'
 
 class Canvas extends React.Component {
 
-    width = 640;
-    height = 480;
-    ids = [] ;
+    width = 880;
+    height = 582;
+    ids = [];
 
     drawCircle = () => {
         // codice dell'effetto 1
@@ -64,6 +64,15 @@ class Canvas extends React.Component {
         this.context.stroke();
 
     }
+
+    drawImage = () => {
+        var image = new Image();
+        // image.crossOrigin = "Anonymous";
+        image.onload = () => {
+            this.context.drawImage(image, -100, -100);
+        };
+        image.src = require('../tree.jpg');
+    }
     
     getRandomColor() {
         var letters = '0123456789ABCDEF';
@@ -74,6 +83,19 @@ class Canvas extends React.Component {
         return color;
     }
 
+    glitch = () => {
+        setInterval(() => {
+                
+            let px = Math.floor(Math.random() * this.width); 
+            let py = Math.floor(Math.random() * this.height); 
+            let p2x = Math.floor(Math.random() * this.width); 
+            let p2y = Math.floor(Math.random() * this.height); 
+
+            var imgData = this.context.getImageData(px, py, 50, 50);
+            this.context.putImageData(imgData, p2x, p2y);
+        }, 100);
+    }
+
     constructor(props) {
         super(props);    
         this.canvasRef = React.createRef();
@@ -82,20 +104,24 @@ class Canvas extends React.Component {
     componentDidMount() {
         const canvas = this.canvasRef.current;
         this.context = canvas.getContext('2d');
+        this.context.lineWidth = 3;
         this.context.fillRect(0, 0, canvas.width, canvas.height);
+        this.drawImage();
       }
         
     render() {
         return(
             <div>
+                
                 <div>{this.props.title}</div>
                 <canvas ref={this.canvasRef} width={this.width} height={this.height} />
                 <br></br>
                 <button onClick={this.drawMultiCircle} >DrawCircle</button>
                 <button onClick={() => this.drawPolygon(3)} >RANDOM GOD</button>
                 <button onClick={() => this.drawPolygon(5)} >Polygon</button>
-
+                <button onClick={this.glitch} >Glitch</button>
                 <button onClick={this.stopDraw}>stop</button>
+
             </div>
         )
         }
