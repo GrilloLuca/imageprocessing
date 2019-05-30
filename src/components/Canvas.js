@@ -10,28 +10,49 @@ class Canvas extends React.Component {
         let cx = Math.floor(Math.random() * this.width); 
         let cy = Math.floor(Math.random() * this.height); 
 
-        let r = Math.floor(Math.random() * 9);
-        let g = Math.floor(Math.random() * 9);
-        let b = Math.floor(Math.random() * 9);
-
         let size = 10 + Math.floor(Math.random() * 90);
-        
-        let color = `#${r}${g}${b}`;
 
         this.context.beginPath();
         this.context.arc(cx, cy, size, 0, 2 * Math.PI);
-        this.context.strokeStyle = color;
+        this.context.strokeStyle = this.getRandomColor();
         this.context.stroke();
     }
 
-    onClickEffect2 = () => {
-        // codice dell'effetto 1
-        alert('hai applicato l\'effetto 2');
+    drawTriangle = () => {
+        // per generare immagine diddDI000
+
+        let p1x = Math.floor(Math.random() * this.width); 
+        let p1y = Math.floor(Math.random() * this.height); 
+
+        let p2x = Math.floor(Math.random() * this.width); 
+        let p2y = Math.floor(Math.random() * this.height); 
+
+        let p3x = Math.floor(Math.random() * this.width); 
+        let p3y = Math.floor(Math.random() * this.height); 
+
+        this.context.beginPath();
+        this.context.moveTo(p1x , p1y);
+        this.context.lineTo(p2x, p2y);
+        this.context.lineTo(p3x, p3y);
+        this.context.lineTo(p1x, p1y);
+
+        this.context.strokeStyle = this.getRandomColor();    
+        this.context.stroke();
+        
     }
 
     onClickEffect3 = () => {
         // codice dell'effetto 1
         alert('hai applicato l\'effetto 3');
+    }
+
+    getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
     }
 
     constructor(props) {
@@ -52,7 +73,7 @@ class Canvas extends React.Component {
                 <canvas ref={this.canvasRef} width={this.width} height={this.height} />
                 <br></br>
                 <button onClick={this.drawCircle} >DrawCircle</button>
-                <button onClick={this.onClickEffect2} >Effetto 2</button>
+                <button onClick={this.drawTriangle} >RANDOM GOD</button>
                 <button onClick={this.onClickEffect3} >Effetto 3</button>
             </div>
         )
