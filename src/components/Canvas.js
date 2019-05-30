@@ -18,34 +18,33 @@ class Canvas extends React.Component {
         this.context.stroke();
     }
 
-    drawTriangle = () => {
+    drawPolygon = (vertex) => {
         // per generare immagine diddDI000
-
-        let p1x = Math.floor(Math.random() * this.width); 
-        let p1y = Math.floor(Math.random() * this.height); 
-
-        let p2x = Math.floor(Math.random() * this.width); 
-        let p2y = Math.floor(Math.random() * this.height); 
-
-        let p3x = Math.floor(Math.random() * this.width); 
-        let p3y = Math.floor(Math.random() * this.height); 
-
         this.context.beginPath();
-        this.context.moveTo(p1x , p1y);
-        this.context.lineTo(p2x, p2y);
-        this.context.lineTo(p3x, p3y);
-        this.context.lineTo(p1x, p1y);
+        // 0, 1, 2
+        let p0x, p0y;
+        for(var i=0; i<vertex; i++) {
+
+            let px = Math.floor(Math.random() * this.width); 
+            let py = Math.floor(Math.random() * this.height); 
+            if(i==0) {
+                p0x = px;
+                p0y = py;
+                this.context.moveTo(px , py);
+            } else {
+                this.context.lineTo(px, py);
+            }
+
+            if(i==vertex-1) {
+                this.context.lineTo(p0x, p0y);
+            }
+        }
 
         this.context.strokeStyle = this.getRandomColor();    
         this.context.stroke();
-        
-    }
 
-    onClickEffect3 = () => {
-        // codice dell'effetto 1
-        alert('hai applicato l\'effetto 3');
     }
-
+    
     getRandomColor() {
         var letters = '0123456789ABCDEF';
         var color = '#';
@@ -73,8 +72,8 @@ class Canvas extends React.Component {
                 <canvas ref={this.canvasRef} width={this.width} height={this.height} />
                 <br></br>
                 <button onClick={this.drawCircle} >DrawCircle</button>
-                <button onClick={this.drawTriangle} >RANDOM GOD</button>
-                <button onClick={this.onClickEffect3} >Effetto 3</button>
+                <button onClick={() => this.drawPolygon(3)} >RANDOM GOD</button>
+                <button onClick={() => this.drawPolygon(5)} >Polygon</button>
             </div>
         )
         }
