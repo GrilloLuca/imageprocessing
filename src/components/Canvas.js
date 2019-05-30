@@ -4,6 +4,7 @@ class Canvas extends React.Component {
 
     width = 640;
     height = 480;
+    ids = [] ;
 
     drawCircle = () => {
         // codice dell'effetto 1
@@ -16,6 +17,25 @@ class Canvas extends React.Component {
         this.context.arc(cx, cy, size, 0, 2 * Math.PI);
         this.context.strokeStyle = this.getRandomColor();
         this.context.stroke();
+    }
+
+    drawMultiCircle = () => {
+        
+        /*
+        for (let i = 0 ; i < 30; i++){
+            this.drawCircle ();     
+        }
+        */
+
+        let id = setInterval(this.drawCircle,100);
+        this.ids.push(id);
+    }
+    stopDraw= () => {
+        //clearInterval (this.id);
+        this.ids.forEach((v, i) => {
+            clearInterval (v);
+        });
+        this.ids = [];
     }
 
     drawPolygon = (vertex) => {
@@ -71,9 +91,11 @@ class Canvas extends React.Component {
                 <div>{this.props.title}</div>
                 <canvas ref={this.canvasRef} width={this.width} height={this.height} />
                 <br></br>
-                <button onClick={this.drawCircle} >DrawCircle</button>
+                <button onClick={this.drawMultiCircle} >DrawCircle</button>
                 <button onClick={() => this.drawPolygon(3)} >RANDOM GOD</button>
                 <button onClick={() => this.drawPolygon(5)} >Polygon</button>
+
+                <button onClick={this.stopDraw}>stop</button>
             </div>
         )
         }
