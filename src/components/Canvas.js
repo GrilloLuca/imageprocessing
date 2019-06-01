@@ -2,16 +2,16 @@ import React from 'react'
 
 class Canvas extends React.Component {
 
-    width = 880;
-    height = 582;
+    width = 800;
+    height = 500;
     ids = [];
 
     drawCircle = () => {
         // codice dell'effetto 1
-        let cx = Math.floor(Math.random() * this.width); 
-        let cy = Math.floor(Math.random() * this.height); 
+        let cx = this.getRand(0, this.width); 
+        let cy = this.getRand(0, this.height); 
 
-        let size = 10 + Math.floor(Math.random() * 90);
+        let size = this.getRand(10, 100);
 
         this.context.beginPath();
         this.context.arc(cx, cy, size, 0, 2 * Math.PI);
@@ -20,16 +20,10 @@ class Canvas extends React.Component {
     }
 
     drawMultiCircle = () => {
-        
-        /*
-        for (let i = 0 ; i < 30; i++){
-            this.drawCircle ();     
-        }
-        */
-
         let id = setInterval(this.drawCircle,100);
         this.ids.push(id);
     }
+    
     stopDraw= () => {
         //clearInterval (this.id);
         this.ids.forEach((v, i) => {
@@ -45,8 +39,8 @@ class Canvas extends React.Component {
         let p0x, p0y;
         for(var i=0; i<vertex; i++) {
 
-            let px = Math.floor(Math.random() * this.width); 
-            let py = Math.floor(Math.random() * this.height); 
+            let px = this.getRand(0, this.width); 
+            let py = this.getRand(0, this.height); 
             if(i==0) {
                 p0x = px;
                 p0y = py;
@@ -78,22 +72,28 @@ class Canvas extends React.Component {
         var letters = '0123456789ABCDEF';
         var color = '#';
         for (var i = 0; i < 6; i++) {
-          color += letters[Math.floor(Math.random() * 16)];
+          color += letters[this.getRand(0, 16)];
         }
         return color;
     }
 
-    glitch = () => {
-        setInterval(() => {
-                
-            let px = Math.floor(Math.random() * this.width); 
-            let py = Math.floor(Math.random() * this.height); 
-            let p2x = Math.floor(Math.random() * this.width); 
-            let p2y = Math.floor(Math.random() * this.height); 
+    getRand = (from, to) => from + Math.floor(Math.random() * to+from);
+    
 
-            var imgData = this.context.getImageData(px, py, 50, 50);
+    glitch = (s) => {
+        // setInterval(() => {
+                
+            let px = this.getRand(0, this.width-s); 
+            let py = this.getRand(0, this.height-s); 
+            let p2x = this.getRand(0, this.width); 
+            let p2y = this.getRand(0, this.height); 
+
+            let sx = this.getRand(1, s);
+            let sy = this.getRand(1, s);
+
+            var imgData = this.context.getImageData(px, py, sx, sy);
             this.context.putImageData(imgData, p2x, p2y);
-        }, 100);
+        // }, 100);
     }
 
     constructor(props) {
@@ -119,7 +119,7 @@ class Canvas extends React.Component {
                 <button onClick={this.drawMultiCircle} >DrawCircle</button>
                 <button onClick={() => this.drawPolygon(3)} >RANDOM GOD</button>
                 <button onClick={() => this.drawPolygon(5)} >Polygon</button>
-                <button onClick={this.glitch} >Glitch</button>
+                <button onClick={() => this.glitch(200)} >Glitch</button>
                 <button onClick={this.stopDraw}>stop</button>
 
             </div>
